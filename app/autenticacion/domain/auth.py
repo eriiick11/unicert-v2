@@ -19,6 +19,7 @@ class LoginRequest(BaseModel):
         if " " in v:
             raise ValueError("La contraseña no puede contener espacios")
         return v
+        
 
 class UsuarioAuthData(BaseModel):
     id: int
