@@ -2,9 +2,7 @@ from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
 from fastapi.security import HTTPAuthorizationCredentials
 from app.autenticacion.domain.auth import LoginRequest
-from app.autenticacion.services.auth_service import (
-    auth_service, CuentaBloqueadaError, IntentosFallidosError
-)
+from app.autenticacion.services.auth_service import (auth_service, CuentaBloqueadaError, IntentosFallidosError)
 from app.core.dependencies import get_current_user, security
 from app.core.responses import success_response, error_response
 

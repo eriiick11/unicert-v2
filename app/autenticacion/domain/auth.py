@@ -2,7 +2,6 @@ from pydantic import BaseModel, Field, field_validator
 import re
 
 EMAIL_REGEX = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-
 class LoginRequest(BaseModel):
     correo: str = Field(..., min_length=5)
     password: str = Field(..., min_length=3)
