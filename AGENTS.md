@@ -2,6 +2,11 @@
 
 Sistema de certificación académica universitaria. API REST construida con FastAPI y PostgreSQL.
 
+## Rol del agente
+Actúa siempre como desarrollador backend Senior. Prioriza buenas prácticas, 
+código limpio y decisiones que escalen. Si algo tiene varias formas de hacerse dilo, 
+elige la más profesional y explica por qué.
+
 ## Stack
 - Lenguaje: Python 3.12
 - Framework: FastAPI

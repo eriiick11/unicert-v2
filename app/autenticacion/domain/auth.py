@@ -13,6 +13,7 @@ class LoginRequest(BaseModel):
             raise ValueError("El correo no tiene formato válido")
         return v.lower().strip()
 
+
     @field_validator("password")
     @classmethod
     def password_sin_espacios(cls, v):
@@ -20,7 +21,6 @@ class LoginRequest(BaseModel):
             raise ValueError("La contraseña no puede contener espacios")
         return v
         
-
 class UsuarioAuthData(BaseModel):
     id: int
     nombre: str

@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Optional
 
 class Certificate:
@@ -59,8 +59,7 @@ class CertificateResponse(BaseModel):
     fecha_emision: str
     ruta_pdf: Optional[str] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class CertificateAnuladoResponse(BaseModel):
     id: int

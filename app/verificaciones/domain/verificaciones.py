@@ -1,6 +1,6 @@
 import re
 from datetime import datetime, timezone
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 UUID_REGEX = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", re.IGNORECASE)
 
@@ -75,5 +75,4 @@ class VerificacionResponse(BaseModel):
     ip_verificador: str
     timestamp: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

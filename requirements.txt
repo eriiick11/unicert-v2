@@ -1,0 +1,18 @@
+# UniCert V2 — dependencias de runtime (Python 3.12)
+
+# API
+fastapi>=0.115.0,<1.0.0
+uvicorn[standard]>=0.32.0,<1.0.0
+
+# Validación de modelos (usado en domain/)
+pydantic>=2.10.0,<3.0.0
+
+# Autenticación JWT y contraseñas (app/core/security.py)
+python-jose[cryptography]>=3.3.0,<4.0.0
+passlib[bcrypt]>=1.7.4,<2.0.0
+bcrypt>=4.0.1,<4.1.0
+
+# Variables de entorno (.env)
+python-dotenv>=1.0.0,<2.0.0
+httpx==0.28.1
+httpx2==2.5.0

@@ -30,7 +30,7 @@ class Plantilla:
 class PlantillaCreate(BaseModel):
     nombre: str = Field(..., min_length=1)
     tipo_certificado: str = Field(..., min_length=1)
-    estructura: dict = Field(..., example={"campos": ["nombre_estudiante", "programa_academico", "fecha_emision"]})
+    estructura: dict = Field(..., json_schema_extra={"example": {"campos": ["nombre_estudiante", "programa_academico", "fecha_emision"]}})
 
     @field_validator("estructura")
     @classmethod
@@ -44,7 +44,7 @@ class PlantillaCreate(BaseModel):
 class PlantillaUpdate(BaseModel):
     nombre: Optional[str] = Field(None, min_length=1)
     tipo_certificado: Optional[str] = Field(None, min_length=1)
-    estructura: Optional[dict] = Field(None, example={"campos": ["nombre_estudiante", "programa_academico", "fecha_emision"]})
+    estructura: Optional[dict] = Field(None, json_schema_extra={"example": {"campos": ["nombre_estudiante", "programa_academico", "fecha_emision"]}})
 
     @field_validator("estructura")
     @classmethod

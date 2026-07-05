@@ -1,5 +1,5 @@
 import re
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 ESTADOS_REPOSITORIO = frozenset({"GENERADO", "DISPONIBLE", "ANULADO"})
 
@@ -59,8 +59,7 @@ class CertificateRepositoryResponse(BaseModel):
     estado: str
     ruta_archivo: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class CertificateHistoryItem(BaseModel):
     uuid: str
@@ -69,8 +68,7 @@ class CertificateHistoryItem(BaseModel):
     fecha_emision: str
     estado: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class CertificateMetadataResponse(BaseModel):
     uuid: str
@@ -78,5 +76,4 @@ class CertificateMetadataResponse(BaseModel):
     fecha_emision: str
     estado: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
