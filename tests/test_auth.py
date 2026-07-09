@@ -1,8 +1,10 @@
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 import pytest
+from jose import jwt
 
 from app.autenticacion.repository.auth_repository import MAX_INTENTOS
+from app.core.security import SECRET_KEY
 
 
 class TestLogin:
@@ -186,9 +188,27 @@ class TestValidarToken:
         body = response.json()
         assert "revocado" in body["error"]["details"].lower()
 
+    def test_validar_token_expired(self, client):
+        expired_token = jwt.encode(
+            {
+                "id": 1,
+                "correo": "admin@unicert.com",
+                "rol": "ADMINISTRADOR",
+                "nombre": "Admin UniCert",
+                "exp": datetime.now(timezone.utc) - timedelta(hours=1),
+            },
+            SECRET_KEY,
+            algorithm="HS256",
+        )
+        headers = {"Authorization": f"Bearer {expired_token}"}
+        response = client.get(self.VALIDAR_URL, headers=headers)
+        assert response.status_code == 401
+        body = response.json()
+        assert "expirada" in body["error"]["details"].lower()
+
     def test_validar_token_invalid_signature(self, client):
         headers = {"Authorization": "Bearer token-invalido"}
         response = client.get(self.VALIDAR_URL, headers=headers)
         assert response.status_code == 401
         body = response.json()
-        assert body["error"]["details"] == "Token inválido o expirado"
+        assert body["error"]["details"] == "Token inválido o manipulado"

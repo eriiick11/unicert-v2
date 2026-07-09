@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta, timezone
-from typing import Optional
 from jose import JWTError, jwt
+from jose.exceptions import ExpiredSignatureError
 from passlib.context import CryptContext
 from dotenv import load_dotenv
 import os
@@ -19,7 +19,12 @@ pwd_context = CryptContext(
     bcrypt__rounds=12
 )
 
-# Encripta contraseña
+class TokenExpiredError(Exception):
+    pass
+
+class TokenInvalidError(Exception):
+    pass
+
 def hash_password(password: str) -> str:
     # Encripta contraseña - bcrypt limita a 72 bytes
     # Truncar la contraseña para evitar errores con bcrypt
@@ -39,14 +44,10 @@ def create_access_token(data: dict) -> str:
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
-# Lee y valida token. Retorna None si es inválido
-def decode_access_token(token: str) -> Optional[dict]:
+def decode_access_token(token: str) -> dict:
     try:
-        payload = jwt.decode(
-            token,
-            SECRET_KEY,
-            algorithms=[ALGORITHM]
-        )
-        return payload
+        return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    except ExpiredSignatureError:
+        raise TokenExpiredError("Token expirado")
     except JWTError:
-        return None
+        raise TokenInvalidError("Token inválido o manipulado")
